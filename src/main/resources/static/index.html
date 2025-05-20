@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WalkieTalkie SSE Client</title>
+</head>
+<body>
+<h1>Mensajes recibidos</h1>
+<div id="messages"></div>
+
+<script>
+    const messagesDiv = document.getElementById('messages');
+
+    const eventSource = new EventSource('http://localhost:8080/api/stream');
+
+    eventSource.onmessage = function(event) {
+        const p = document.createElement('p');
+        p.textContent = event.data;
+        messagesDiv.appendChild(p);
+    };
+
+    eventSource.onerror = function(err) {
+        console.error("Error en conexión SSE", err);
+    };
+</script>
+</body>
+</html>
